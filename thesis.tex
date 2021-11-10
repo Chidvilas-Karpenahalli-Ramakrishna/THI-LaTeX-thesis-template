@@ -1,0 +1,205 @@
+%----Preamble-------------------------------------------------------------
+\documentclass[	a4paper,
+				11pt,
+				DIV=11,
+				bigheadings,
+				idxtotoc,
+				listof=totoc,	
+				bibtotoc,		
+				halfparskip,
+				cleardoubleempty,
+				oneside,
+				openright]{scrartcl}
+
+%--------Packages--------------------------------------------------------------------------
+
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{graphicx}	
+\usepackage[labelfont=bf]{caption}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{geometry}
+\geometry{a4paper,left=30mm,right=20mm}
+\usepackage{blindtext}
+\usepackage{layout}
+\PassOptionsToPackage{hyphens}{url}		
+\usepackage[pdfborder={0 0 0},
+			colorlinks=true, 
+			linkcolor=black,
+			citecolor=blue,
+			]{hyperref}
+\usepackage[backend=bibtex,style=numeric,sorting=none]{biblatex}
+\addbibresource{literature.bib}
+\usepackage{pdfpages}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{setspace}
+\usepackage[toc,page]{appendix}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{makecell}
+\renewcommand\theadfont{\bfseries\sffamily}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\DeclareMathOperator{\E}{E}
+\usepackage{scrlayer-scrpage}
+\pagestyle{scrheadings}							
+\clearscrheadfoot 						
+\ohead{\pagemark}								
+\ihead{\ifthispageodd{\leftmark}{\rightmark}} 	
+\setheadsepline{0.4pt} 							
+\setkomafont{pagehead}{\scshape}		
+\setfootsepline{0.4pt} 							
+\setkomafont{pagefoot}{\scshape}				
+\ifoot{\footnotesize{Faruk Kahraman}}
+\ofoot{\footnotesize{BMW Group}}		
+
+
+\defpagestyle{myPageStyle}{
+	(0pt ,0pt)
+	{\hfill\pagemark} {\hfill\pagemark} {\hfill\pagemark}
+	(0pt ,0pt)	
+}{
+{
+	(\textwidth ,0.4pt)
+	\footnotesize{Faruk Kahraman} \hfill \footnotesize{BMW Group}} 
+	{\footnotesize{Faruk Kahraman} \hfill \footnotesize{BMW Group}} 
+	{\footnotesize{Faruk Kahraman} \hfill \footnotesize{BMW Group}}
+	(0pt ,0pt)
+}
+
+
+%----Colour definition------------------------------------------------------
+\definecolor{haw_mag}{rgb}{0,0.112,0.47}
+\addtokomafont{section}{\color{haw_mag} \rmfamily \scshape} 
+\addtokomafont{subsection}{\color{haw_mag} \rmfamily}
+\addtokomafont{subsubsection}{\color{haw_mag} \rmfamily}
+\addtokomafont{paragraph}{\color{haw_mag} \rmfamily}
+\addtokomafont{subparagraph}{\rmfamily}
+
+\definecolor{tab_2}{RGB}{230,230,230}
+\definecolor{tab_1}{RGB}{85,128,214}
+
+%------Length adjustment--------------------------------------------------------
+\setlength{\headsep}{10mm}						
+\setlength{\footskip}{15mm}						
+\setlength{\textheight}{235mm}					
+
+
+%----Glossary-------------------------------------------------------------------
+\usepackage[toc, acronym]{glossaries} 			
+\makeglossaries	
+
+%---Nomenclature----------------------------------------------------------------
+\usepackage[intoc]{nomencl} 
+\makenomenclature
+
+
+\includeonly{	
+	titlepage,							
+	affidavit,
+	acknowledgments,
+	abstractEN,
+	confidentialityClause,
+	glossary,
+	mainpart,
+	nomenclature,
+	appendices
+	}
+	
+		
+%----------------Beginning of Document---------------------------------------
+
+
+\begin{document}
+	\widowpenalty=10000
+	\clubpenalty=10000
+	\displaywidowpenalty=10000	
+	
+
+	% Title page	
+	\include{titlepage}					
+	\cleardoublepage					
+	\pagenumbering{Roman} 			
+    
+    % Affidavit
+	\thispagestyle{myPageStyle}
+	\include{affidavit}
+	\cleardoublepage
+	
+	% Acknowledgements
+	\thispagestyle{myPageStyle}
+	\include{acknowledgments}
+	\cleardoublepage
+	
+	% Abstract English
+	\thispagestyle{myPageStyle}
+	\include{abstractEN}
+	\cleardoublepage
+	
+	% Confidentiality clause (from BMW if any)
+	\thispagestyle{myPageStyle}
+	\include{confidentialityClause}
+	\cleardoublepage
+	
+	% Nomenclature
+	\include{nomenclature}		
+	\printnomenclature
+	\cleardoublepage	
+	
+	% Glossary
+	\include{glossary}	
+	\printglossaries	
+	\glsaddallunused
+	\cleardoublepage
+
+	
+	% List of figures
+	\thispagestyle{myPageStyle}
+	\renewcommand*\listfigurename{List of figures} 
+	\listoffigures
+	\cleardoublepage
+	
+	% List of tables
+	\thispagestyle{myPageStyle}
+	\renewcommand*\listtablename{List of tables} 
+	\listoftables
+	\cleardoublepage
+	
+	% Table of contents
+	\thispagestyle{myPageStyle}
+	\renewcommand{\contentsname}{Table of contents} 
+	\tableofcontents
+	\cleardoublepage
+	\singlespacing
+	
+	% Main part of the thesis
+	\pagenumbering{arabic} 						
+	\include{mainpart}	
+
+    % Remaining part of the thesis
+	\pagenumbering{Roman} 					
+	\setcounter{page}{6} 						
+	
+	% Glossary
+	\thispagestyle{myPageStyle}
+	\glssetwidest{A D A S} 					
+	\setglossarystyle{alttree}												
+	\cleardoublepage
+		
+	% Literature references
+	\thispagestyle{myPageStyle}
+	\printbibliography
+	
+	% Appendices
+	\thispagestyle{myPageStyle} 
+	\include{appendices}
+	\cleardoublepage
+
+\end{document}
